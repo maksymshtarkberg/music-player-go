@@ -1,0 +1,73 @@
+version: "3.8"
+
+services:
+  app:
+    build: ./cmd
+    container_name: api_gateway
+    ports:
+      - "8080:8080"
+    networks:
+      - cache_network
+    depends_on:
+      - redis
+      - mongo
+      - nats
+    environment:
+      MONGO_URI: "mongodb://root:example@mongo_db:27017"
+      REDIS_ADDR: "redis_cache:6379"
+      NATS_URL: "nats://nats_server:4222"
+
+  messaging:
+    build:
+      context: ./internal/messaging
+    container_name: messaging_service
+    depends_on:
+      - nats
+    networks:
+      - app_network
+    environment:
+      NATS_URL: "nats://nats_server:4222"
+
+  auth:
+    build:
+      context: ./internal/auth
+    container_name: auth_service
+    depends_on:
+      - redis
+      - nats
+    networks:
+      - app_network
+    environment:
+      REDIS_ADDR: "redis_cache:6379"
+      NATS_URL: "nats://nats_server:4222"
+
+  redis:
+    image: redis:latest
+    container_name: redis_cache
+    ports:
+      - "6379:6379"
+    networks:
+      - cache_network
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo_db
+    ports:
+      - "27017:27017"
+    networks:
+      - cache_network
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+  nats:
+    image: nats:latest
+    container_name: nats_server
+    ports:
+      - "4222:4222"
+    networks:
+      - cache_network
+
+networks:
+  cache_network:
+    driver: bridge
