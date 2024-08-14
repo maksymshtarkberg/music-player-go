@@ -5,10 +5,11 @@ import (
 	"crypto/sha256"
 	"encoding/hex"
 	"errors"
-	"music-player-go/internal/database"
-	"music-player-go/pkg/models"
 	"os"
 	"time"
+
+	"github.com/maksymshtarkberg/music-player-go/internal/database"
+	"github.com/maksymshtarkberg/music-player-go/pkg/models"
 
 	"github.com/golang-jwt/jwt/v4"
 	"go.mongodb.org/mongo-driver/bson"

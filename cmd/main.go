@@ -1,12 +1,14 @@
-package main
+package cmd
 
 import (
 	"encoding/json"
 	"log"
-	"music-player-go/internal/auth"
-	"music-player-go/internal/database"
-	"music-player-go/internal/messaging"
-	"music-player-go/pkg/models"
+
+	"github.com/maksymshtarkberg/music-player-go/internal/auth"
+	"github.com/maksymshtarkberg/music-player-go/internal/database"
+	"github.com/maksymshtarkberg/music-player-go/internal/messaging"
+	"github.com/maksymshtarkberg/music-player-go/pkg/models"
+
 	"net/http"
 	"os"
 

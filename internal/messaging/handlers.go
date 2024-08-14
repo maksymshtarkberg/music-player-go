@@ -4,8 +4,9 @@ import (
 	"context"
 	"encoding/json"
 	"log"
-	"music-player-go/internal/auth"
-	"music-player-go/pkg/models"
+
+	"github.com/maksymshtarkberg/music-player-go/internal/auth"
+	"github.com/maksymshtarkberg/music-player-go/pkg/models"
 
 	"github.com/nats-io/nats.go"
 )
